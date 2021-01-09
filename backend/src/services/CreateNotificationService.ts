@@ -14,8 +14,8 @@ export default class CreateNotificationService {
     private notificationRepository: NotificationRepository,
   ) { }
 
-  public async execute({sender, description}: RequestDTO): Promise<Notification> {
-    const notification = await this.notificationRepository.create({
+  public execute({sender, description}: RequestDTO): Notification {
+    const notification = this.notificationRepository.create({
       sender, description
     });
 

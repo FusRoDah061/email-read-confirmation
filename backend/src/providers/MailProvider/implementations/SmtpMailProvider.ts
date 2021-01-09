@@ -15,10 +15,13 @@ export default class SESMailProvider implements MailProvider {
     private mailTemplateProvider: MailTemplateProvider,
   ) {
     this.client = nodemailer.createTransport({
-      SES: new aws.SES({
-        apiVersion: '2010-12-01',
-        region: process.env.AWS_DEFAULT_REGION,
-      }),
+      host: mailConfig.smtp.host,
+      port: mailConfig.smtp.port,
+      secure: mailConfig.smtp.port === 465,
+      auth: {
+        user: mailConfig.smtp.user,
+        pass: mailConfig.smtp.password,
+      },
     });
   }
 
@@ -34,7 +37,7 @@ export default class SESMailProvider implements MailProvider {
         address: from?.email || mailConfig.defaults.from.email,
       },
       to: {
-        name: to.name,
+        name: to.name || to.email,
         address: to.email,
       },
       subject,

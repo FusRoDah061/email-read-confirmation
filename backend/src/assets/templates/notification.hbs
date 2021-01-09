@@ -22,7 +22,8 @@
     margin: 10px 0px;
   }
 
-  .last-view span, .views span {
+  .last-view span,
+  .views span {
     font-weight: bold;
   }
 
@@ -34,9 +35,18 @@
   }
 </style>
 
-<div class="message-content">
-  <h1 class="title">Hello there!</h1>
-  <p class="last-view">Your <span>{{description}}</span> e-mail was just viewed by someone at </br> <span>{{viewerLocation}}</span></p>
-  <p class="views">It currently has <span>{{viewCount}}</span> views.</p>
-  <p class="notice">We will keep you posted on future views.</p>
+<!-- Use https://templates.mailchimp.com/resources/inline-css/ to inline styles -->
+
+<div class="message-content"
+  style="font-family: Arial, Helvetica, sans-serif;max-width: 600px;font-size: 18px;line-height: 21px;background-color: #fff;color: #000;">
+  <h1 class="title" style="width: 100%;text-align: center;padding: 15px 0px;font-size: 25px;background-color: #f1f1f1;">
+    Hello there!</h1>
+  <p class="last-view" style="width: 100%;text-align: center;margin: 10px 0px;">Your <span
+      style="font-weight: bold;">{{description}}</span> e-mail was just viewed by someone at </br><span
+      style="font-weight: bold;">{{viewerLocation}}</span></p>
+  <p class="views" style="width: 100%;text-align: center;margin: 10px 0px;">It currently has <span
+      style="font-weight: bold;">{{viewCount}}</span> views.</p>
+  <p class="notice"
+    style="width: 100%;text-align: center;margin: 10px 0px;font-size: 14px;color: #4d4d4d;padding: 10px 0px;background-color: #f1f1f1;">
+    We will keep you posted on future views.</p>
 </div>

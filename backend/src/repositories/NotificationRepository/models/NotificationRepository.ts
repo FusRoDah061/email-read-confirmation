@@ -6,6 +6,7 @@ export interface CreateNotificationDTO {
 }
 
 export default interface NotificationRepository {
-  create(data: CreateNotificationDTO): Promise<Notification>;
-  findById(notificationId: string): Promise<Notification | undefined>;
+  create(data: CreateNotificationDTO): Notification;
+  findById(notificationId: string): Notification | undefined;
+  save(notification: Notification): Notification;
 }

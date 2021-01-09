@@ -1,7 +1,7 @@
-import path from 'path';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import CreateNotificationService from '../services/CreateNotificationService';
+import NotifyService from '../services/NotifyService';
 
 export default class NotificationController {
 
@@ -20,7 +20,16 @@ export default class NotificationController {
   }
 
   public async notify(request: Request, response: Response): Promise<void>{
+    const { notificationId } = request.params;
+    const viewerIpAddress = request.ip;
 
+    const notifyService = container.resolve(NotifyService);
+
+    const imagePath = await notifyService.execute({
+      notificationId, viewerIpAddress
+    });
+
+    response.sendFile(imagePath);
   }
 
 }

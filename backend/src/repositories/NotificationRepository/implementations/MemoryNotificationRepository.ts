@@ -9,7 +9,7 @@ export default class MemoryNotificationRepository implements NotificationReposit
     this.notifications = [];
   }
 
-  public async create({ sender, description }: CreateNotificationDTO): Promise<Notification> {
+  public create({ sender, description }: CreateNotificationDTO): Notification {
     const notification: Notification = {
       id: uuid(),
       sender,
@@ -22,10 +22,26 @@ export default class MemoryNotificationRepository implements NotificationReposit
     return notification;
   }
 
-  public async findById(notificationId: string): Promise<Notification | undefined> {
+  public findById(notificationId: string): Notification | undefined {
     const notification = this.notifications.find(n => {
       return n.id === notificationId;
     });
+
+    return notification;
+  }
+
+  public save(notification: Notification): Notification {
+    const notificationIndex = this.notifications.findIndex(n => {
+      return n.id === notification.id;
+    });
+
+    if(notificationIndex >= 0) {
+      this.notifications[notificationIndex] = {
+        ...notification,
+      }
+
+      return this.notifications[notificationIndex];
+    }
 
     return notification;
   }
