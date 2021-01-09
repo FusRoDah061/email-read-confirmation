@@ -1,5 +1,6 @@
 import path from 'path';
 import { inject, injectable } from "tsyringe";
+import ipLocation from 'iplocation';
 import MailProvider from "../providers/MailProvider/models/MailProvider";
 import NotificationRepository from "../repositories/NotificationRepository/models/NotificationRepository";
 
@@ -27,6 +28,10 @@ export default class NotifyService {
 
       const updatedNotification = this.notificationRepository.save(notification);
 
+      const viewerLocation = await ipLocation(viewerIpAddress);
+      const viewerCity = `${viewerLocation.city}, ${viewerLocation.region.name} - ${viewerLocation.country.code}`;
+
+
       await this.mailProvider.sendMail({
         to: { email: updatedNotification.sender },
         subject: `Your "${updatedNotification.description}" e-mail was just viewed by someone`,
@@ -35,7 +40,7 @@ export default class NotifyService {
           variables: {
             viewCount: updatedNotification.viewCount,
             description: updatedNotification.description,
-            viewerLocation: viewerIpAddress,
+            viewerLocation: viewerCity,
           }
         }
       })
