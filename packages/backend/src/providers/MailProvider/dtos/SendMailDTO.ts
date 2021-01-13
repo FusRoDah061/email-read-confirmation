@@ -1,4 +1,4 @@
-import ParseMailTemplateDTO from "../../MailTemplateProvider/dtos/ParseMailTemplateDTO";
+import ParseMailTemplateDTO from '../../MailTemplateProvider/dtos/ParseMailTemplateDTO';
 
 interface MailContact {
   name?: string;

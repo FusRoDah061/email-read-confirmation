@@ -1,8 +1,11 @@
-import { v4 as uuid } from 'uuid';
+import { uuid } from 'uuidv4';
 import Notification from '../../../entities/Notification';
-import NotificationRepository, { CreateNotificationDTO } from '../models/NotificationRepository';
+import NotificationRepository, {
+  CreateNotificationDTO,
+} from '../models/NotificationRepository';
 
-export default class MemoryNotificationRepository implements NotificationRepository{
+export default class MemoryNotificationRepository
+  implements NotificationRepository {
   private notifications: Notification[];
 
   constructor() {
@@ -15,7 +18,7 @@ export default class MemoryNotificationRepository implements NotificationReposit
       sender,
       description,
       viewCount: 0,
-    }
+    };
 
     this.notifications.push(notification);
 
@@ -35,15 +38,14 @@ export default class MemoryNotificationRepository implements NotificationReposit
       return n.id === notification.id;
     });
 
-    if(notificationIndex >= 0) {
+    if (notificationIndex >= 0) {
       this.notifications[notificationIndex] = {
         ...notification,
-      }
+      };
 
       return this.notifications[notificationIndex];
     }
 
     return notification;
   }
-
 }

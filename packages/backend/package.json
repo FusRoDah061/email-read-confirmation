@@ -8,7 +8,6 @@
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
   },
   "dependencies": {
-    "aws-sdk": "^2.824.0",
     "celebrate": "^13.0.4",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

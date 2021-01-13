@@ -1,4 +1,7 @@
-import { container } from "tsyringe";
-import MemoryNotificationRepository from "./implementations/MemoryNotificationRepository";
+import { container } from 'tsyringe';
+import MemoryNotificationRepository from './implementations/MemoryNotificationRepository';
 
-container.registerInstance('NotificationRepository', new MemoryNotificationRepository());
+container.registerInstance(
+  'NotificationRepository',
+  new MemoryNotificationRepository(),
+);
