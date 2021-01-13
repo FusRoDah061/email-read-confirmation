@@ -36,7 +36,17 @@ export default class NotifyService {
       try {
         console.log('Viewer ip address: ', viewerIpAddress);
 
-        const viewerLocation = await ipLocation(viewerIpAddress);
+        const ipRegex = /((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/;
+
+        let sanitizedIpAddress = viewerIpAddress;
+
+        const regexMatches = ipRegex.exec(viewerIpAddress);
+
+        if (regexMatches && regexMatches.length > 0) {
+          sanitizedIpAddress = regexMatches[0].toString();
+        }
+
+        const viewerLocation = await ipLocation(sanitizedIpAddress);
         const viewerCity = `${viewerLocation.city}, ${viewerLocation.region.name} - ${viewerLocation.country.code}`;
 
         await this.mailProvider.sendMail({
