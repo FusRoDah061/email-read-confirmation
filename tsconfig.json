@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "rootDir": "./packages"
+  },
+  "references": [
+    {
+      "path": "./packages/backend"
+    }
+  ]
+}
