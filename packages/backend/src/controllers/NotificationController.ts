@@ -22,7 +22,14 @@ export default class NotificationController {
 
   public async notify(request: Request, response: Response): Promise<void> {
     const { notificationId } = request.params;
-    const viewerIpAddress = request.ip;
+    const requestIps = request.ips;
+    const viewerIpAddress =
+      requestIps && requestIps.length > 0
+        ? requestIps[requestIps.length - 1]
+        : request.ip;
+
+    console.log('requestIps: ', requestIps);
+    console.log('viewerIpAddress: ', viewerIpAddress);
 
     const notifyService = container.resolve(NotifyService);
 
