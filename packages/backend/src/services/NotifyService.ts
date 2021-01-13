@@ -1,6 +1,6 @@
 import path from 'path';
 import { inject, injectable } from 'tsyringe';
-import ipLocation from 'iplocation';
+import IpLocationProvider from '../providers/IpLocationProvider/models/IpLocationProvider';
 import MailProvider from '../providers/MailProvider/models/MailProvider';
 import NotificationRepository from '../repositories/NotificationRepository/models/NotificationRepository';
 
@@ -17,6 +17,9 @@ export default class NotifyService {
 
     @inject('MailProvider')
     private mailProvider: MailProvider,
+
+    @inject('IpLocationProvider')
+    private ipLocationProvider: IpLocationProvider,
   ) {}
 
   public async execute({
@@ -46,8 +49,12 @@ export default class NotifyService {
           sanitizedIpAddress = regexMatches[0].toString();
         }
 
-        const viewerLocation = await ipLocation(sanitizedIpAddress);
-        const viewerCity = `${viewerLocation.city}, ${viewerLocation.region.name} - ${viewerLocation.country.code}`;
+        const viewerLocation = await this.ipLocationProvider.get(
+          sanitizedIpAddress,
+        );
+        const viewerCity = viewerLocation.city
+          ? `${viewerLocation.city}, ${viewerLocation.state} - ${viewerLocation.countryCode}`
+          : undefined;
 
         await this.mailProvider.sendMail({
           to: { email: updatedNotification.sender },

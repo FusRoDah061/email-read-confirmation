@@ -1,5 +1,5 @@
 interface TemplateVariables {
-  [key: string]: string | number;
+  [key: string]: string | number | undefined;
 }
 
 export default interface ParseMailTemplateDTO {

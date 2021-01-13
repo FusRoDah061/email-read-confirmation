@@ -14,7 +14,7 @@
         "<node_internals>/**"
       ],
       "outFiles": [
-        "${workspaceFolder}/backend/**/*.js"
+        "${workspaceFolder}/packages/backend/**/*.js"
       ]
     }
   ]
