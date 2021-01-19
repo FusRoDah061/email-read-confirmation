@@ -6,21 +6,30 @@
   ],
   "scripts": {
     "build": "yarn build:backend",
+
     "build:backend": "yarn workspace @email-visualization-notifier/backend build",
-    "start": "yarn start:backend",
+    "build:frontend": "yarn workspace @email-visualization-notifier/frontend build",
+
     "start:backend": "yarn workspace @email-visualization-notifier/backend start",
-    "dev:backend": "yarn workspace @email-visualization-notifier/backend dev"
+    "start:frontend": "yarn workspace @email-visualization-notifier/frontend start",
+
+    "dev:backend": "yarn workspace @email-visualization-notifier/backend dev",
+    "dev:frontend": "yarn workspace @email-visualization-notifier/frontend start"
   },
   "devDependencies": {
     "@octokit/core": "^3.2.4",
-    "@typescript-eslint/eslint-plugin": "^4.12.0",
-    "@typescript-eslint/parser": "^4.13.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
     "eslint": "^7.17.0",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.1.0",
     "eslint-import-resolver-typescript": "^2.3.0",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import": "2.21.2",
+    "eslint-plugin-jsx-a11y": "6.3.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "7.20.0",
+    "eslint-plugin-react-hooks": "4",
     "lerna": "^3.22.1",
     "prettier": "^2.2.1",
     "typescript": "^4.1.3"

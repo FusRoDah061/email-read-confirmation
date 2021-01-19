@@ -4,6 +4,7 @@
         "node": true
     },
     "extends": [
+        "plugin:react/recommended",
         "airbnb-base",
         "plugin:@typescript-eslint/recommended",
         "prettier",
@@ -22,17 +23,33 @@
         "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
     },
     "plugins": [
+        "react-hooks",
         "@typescript-eslint",
         "prettier"
     ],
     "rules": {
+      "no-use-before-define": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".tsx"
+          ]
+        }
+      ],
+      "import/prefer-default-export": "off",
+      "camelcase": "off",
+      "@typescript-eslint/ban-types": "off",
       "class-methods-use-this": "off",
       "no-useless-constructor": "off",
       "import/extensions": [
         "error",
         "ignorePackages",
         {
-          "ts": "never"
+          "ts": "never",
+          "tsx": "never"
         }
       ],
       "prettier/prettier": "error"
