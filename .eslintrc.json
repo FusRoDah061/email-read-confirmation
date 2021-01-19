@@ -1,70 +1,70 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true,
-        "node": true
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb-base",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "plugin:react/recommended",
-        "airbnb-base",
-        "plugin:@typescript-eslint/recommended",
-        "prettier",
-        "prettier/@typescript-eslint",
-        "plugin:prettier/recommended"
-    ],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-          "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module",
-        "project": "packages/*/{src,test}/tsconfig.json",
-        "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
-    },
-    "plugins": [
-        "react",
-        "react-hooks",
-        "@typescript-eslint",
-        "prettier"
-    ],
-    "rules": {
-      "no-use-before-define": "off",
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
-      "react/jsx-filename-extension": [
-        1,
-        {
-          "extensions": [
-            ".tsx"
-          ]
-        }
-      ],
-      "import/prefer-default-export": "off",
-      "camelcase": "off",
-      "@typescript-eslint/ban-types": "off",
-      "class-methods-use-this": "off",
-      "no-useless-constructor": "off",
-      "import/extensions": [
-        "error",
-        "ignorePackages",
-        {
-          "ts": "never",
-          "tsx": "never"
-        }
-      ],
-      "prettier/prettier": "error"
-    },
-    "settings": {
-      "import/resolver": {
-        "typescript": {}
-      },
-      "react": {
-        "version": "detect"
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "project": "packages/*/{src,test}/tsconfig.json",
+    "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
+  },
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint",
+    "prettier"
+  ],
+  "rules": {
+    "no-use-before-define": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".tsx"
+        ]
       }
+    ],
+    "import/prefer-default-export": "off",
+    "camelcase": "off",
+    "@typescript-eslint/ban-types": "off",
+    "class-methods-use-this": "off",
+    "no-useless-constructor": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "prettier/prettier": "error"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    },
+    "react": {
+      "version": "detect"
     }
+  }
 }
