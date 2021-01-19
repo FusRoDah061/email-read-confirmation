@@ -1,11 +1,8 @@
 import React from 'react';
+import { Container } from './styles';
 
 const App: React.FC = () => {
-  return (
-    <div>
-      <header>Hello world</header>
-    </div>
-  );
+  return <Container>Frontend</Container>;
 };
 
 export default App;
