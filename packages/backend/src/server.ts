@@ -4,7 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import { errors } from 'celebrate';
 import './container';
-import routes from './routes';
+import routes from "./routes";
 
 const app = express();
 
