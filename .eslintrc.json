@@ -34,6 +34,18 @@
   ],
   "rules": {
     "no-use-before-define": "off",
+    "class-methods-use-this": "off",
+    "no-useless-constructor": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "prettier/prettier": "error",
+
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-filename-extension": [
@@ -46,18 +58,7 @@
     ],
     "import/prefer-default-export": "off",
     "camelcase": "off",
-    "@typescript-eslint/ban-types": "off",
-    "class-methods-use-this": "off",
-    "no-useless-constructor": "off",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "ts": "never",
-        "tsx": "never"
-      }
-    ],
-    "prettier/prettier": "error"
+    "@typescript-eslint/ban-types": "off"
   },
   "settings": {
     "import/resolver": {
