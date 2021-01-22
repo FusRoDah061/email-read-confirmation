@@ -84,6 +84,7 @@ export const StepLabelColumn = styled.div`
 
 export const PrimaryStepContainer = styled.section`
   display: flex;
+  height: 100vh;
   flex-direction: row;
   padding: 3rem 2rem 6rem 1.5rem;
 
@@ -115,13 +116,13 @@ export const StepFormColumn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding-top: 0.9rem;
 
   label {
     width: 100%;
     font-size: 1.5rem;
     margin-bottom: 3rem;
-    padding-left: 1.1rem;
   }
 `;
 

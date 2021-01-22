@@ -121,7 +121,7 @@ const Home: React.FC = () => {
             is enough.
           </StepDescription>
 
-          <Button>NEXT</Button>
+          <Button>FINISH</Button>
         </StepFormColumn>
       </PrimaryStepContainer>
 
