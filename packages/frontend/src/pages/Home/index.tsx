@@ -3,7 +3,8 @@ import {
   Container,
   Jumbotron,
   StartButton,
-  StepContainer,
+  PrimaryStepContainer,
+  SecondaryStepContainer,
   StepLabelColumn,
   StepLabel,
   StepFormColumn,
@@ -37,14 +38,18 @@ const Home: React.FC = () => {
         </StartButton>
       </Jumbotron>
 
-      <StepContainer>
+      <PrimaryStepContainer>
         <StepLabelColumn>
-          <StepLabel>Step 1</StepLabel>
+          <StepLabel>
+            <p>
+              <span>Step</span> 1
+            </p>
+          </StepLabel>
         </StepLabelColumn>
 
         <StepFormColumn>
           <label htmlFor="js-description-input">
-            Give you notification a description:
+            Give your notification a description:
           </label>
           <InputWrapper>
             <input id="js-description-input" type="text" />
@@ -60,15 +65,23 @@ const Home: React.FC = () => {
 
           <Button>NEXT</Button>
         </StepFormColumn>
-      </StepContainer>
+      </PrimaryStepContainer>
 
-      <StepContainer>
+      <SecondaryStepContainer>
+        <StepLabelColumn>
+          <StepLabel>
+            <p>
+              <span>Step</span> 2
+            </p>
+          </StepLabel>
+        </StepLabelColumn>
+
         <StepFormColumn>
           <label htmlFor="js-description-input">
             Tell us the e-mail address we will notify:
           </label>
           <InputWrapper>
-            <input id="js-description-input" type="text" />
+            <input id="js-description-input" type="email" />
           </InputWrapper>
 
           <StepHint>
@@ -80,16 +93,14 @@ const Home: React.FC = () => {
 
           <Button>NEXT</Button>
         </StepFormColumn>
+      </SecondaryStepContainer>
 
-        <StepLabelColumn>
-          <StepLabel>Step 2</StepLabel>
-        </StepLabelColumn>
-      </StepContainer>
-
-      <StepContainer>
+      <PrimaryStepContainer>
         <StepLabelColumn>
           <StepLabel>
-            Step 3 <span>Optional</span>
+            <p>
+              <span>Step</span> 3 <span>Optional</span>
+            </p>
           </StepLabel>
         </StepLabelColumn>
 
@@ -112,7 +123,7 @@ const Home: React.FC = () => {
 
           <Button>NEXT</Button>
         </StepFormColumn>
-      </StepContainer>
+      </PrimaryStepContainer>
 
       <FinalStepContainer>
         <FinalStepTitle>All done here!</FinalStepTitle>
