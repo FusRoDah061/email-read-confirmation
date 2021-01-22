@@ -10,5 +10,5 @@ export const colors = {
 };
 
 export const mediaBreaks = {
-  mobile: '770px',
+  mobile: '500px',
 };
