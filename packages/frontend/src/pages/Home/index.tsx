@@ -89,6 +89,12 @@ const Home: React.FC = () => {
     setLoading(false);
   }, [description, email, recipient]);
 
+  const handleCopy = useCallback(async (text: string) => {
+    if ('clipboard' in navigator) {
+      await navigator.clipboard.writeText(text);
+    }
+  }, []);
+
   return (
     <Container>
       <Jumbotron>
@@ -251,7 +257,15 @@ const Home: React.FC = () => {
             </p>
 
             <CodeSnippet>
-              <CodeSnippetCopyButton>COPY</CodeSnippetCopyButton>
+              <CodeSnippetCopyButton
+                onClick={() =>
+                  handleCopy(
+                    `${process.env.REACT_APP_API_URL}/notify/${notification.id}`,
+                  )
+                }
+              >
+                COPY
+              </CodeSnippetCopyButton>
               <p>
                 {`${process.env.REACT_APP_API_URL}/notify/${notification.id}`}
               </p>
@@ -263,7 +277,15 @@ const Home: React.FC = () => {
             </p>
 
             <CodeSnippet>
-              <CodeSnippetCopyButton>COPY</CodeSnippetCopyButton>
+              <CodeSnippetCopyButton
+                onClick={() =>
+                  handleCopy(
+                    `<img href="${process.env.REACT_APP_API_URL}/notify/${notification.id}"/>`,
+                  )
+                }
+              >
+                COPY
+              </CodeSnippetCopyButton>
               <p>
                 {`<img href="${process.env.REACT_APP_API_URL}/notify/${notification.id}"/>`}
               </p>
