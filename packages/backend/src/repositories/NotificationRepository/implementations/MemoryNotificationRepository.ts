@@ -12,12 +12,20 @@ export default class MemoryNotificationRepository
     this.notifications = [];
   }
 
-  public create({ sender, description }: CreateNotificationDTO): Notification {
+  public create({
+    sender,
+    description,
+    recipient,
+    viewCount,
+    expiration,
+  }: CreateNotificationDTO): Notification {
     const notification: Notification = {
       id: uuid(),
       sender,
       description,
-      viewCount: 0,
+      recipient,
+      viewCount,
+      expiration,
     };
 
     this.notifications.push(notification);

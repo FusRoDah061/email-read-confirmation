@@ -5,8 +5,7 @@ import NotifyService from '../services/NotifyService';
 
 export default class NotificationController {
   public async create(request: Request, response: Response): Promise<void> {
-    const sender = request.query.sender?.toString() as string;
-    const description = request.query.description?.toString() as string;
+    const { description, sender, recipient } = request.body;
 
     const createNotificationService = container.resolve(
       CreateNotificationService,
@@ -15,6 +14,7 @@ export default class NotificationController {
     const notification = await createNotificationService.execute({
       sender,
       description,
+      recipient,
     });
 
     response.json(notification);

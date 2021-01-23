@@ -9,9 +9,10 @@ const notificationController = new NotificationController();
 router.post(
   '/notify',
   celebrate({
-    [Segments.QUERY]: {
+    [Segments.BODY]: {
       sender: Joi.string().email().trim().required(),
-      description: Joi.string().trim().max(100),
+      description: Joi.string().trim().max(100).required(),
+      recipient: Joi.string().trim().optional().allow('', null),
     },
   }),
   notificationController.create,
