@@ -1,4 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
+import { differenceInDays, parseISO } from 'date-fns';
 import {
   Container,
   Jumbotron,
@@ -13,6 +14,7 @@ import {
   StepDescription,
   Button,
   FinalStepContainer,
+  FinalStepContent,
   FinalStepContainerHead,
   FinalStepTitle,
   FinalStepHint,
@@ -22,11 +24,20 @@ import {
 
 import mailIcon from '../../assets/mail-icon.svg';
 import arrowsDown from '../../assets/arrows-down.svg';
+import api from '../../services/api';
+
+interface Notification {
+  id: string;
+  sender: string;
+  expiration: Date;
+}
 
 const Home: React.FC = () => {
   const [description, setDescription] = useState('');
   const [email, setEmail] = useState('');
   const [recipient, setRecipient] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState<Notification | undefined>();
 
   const firstStepRef = useRef<HTMLElement>(null);
   const notificationDescriptionRef = useRef<HTMLInputElement>(null);
@@ -54,9 +65,29 @@ const Home: React.FC = () => {
     recipientRef.current?.focus({ preventScroll: true });
   }, []);
 
-  const handleFinish = useCallback(() => {
+  const handleFinish = useCallback(async () => {
+    setLoading(true);
+
     finalStepRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
+
+    const response = await api.createNotification({
+      description,
+      sender: email,
+      recipient,
+    });
+
+    if (response.status === 200) {
+      const { id, sender, expiration } = response.data;
+
+      setNotification({
+        id,
+        sender,
+        expiration: parseISO(expiration),
+      });
+    }
+
+    setLoading(false);
+  }, [description, email, recipient]);
 
   return (
     <Container>
@@ -93,6 +124,7 @@ const Home: React.FC = () => {
               type="text"
               value={description}
               onChange={e => setDescription(e.target.value)}
+              maxLength={100}
             />
           </InputWrapper>
 
@@ -181,42 +213,69 @@ const Home: React.FC = () => {
       </PrimaryStepContainer>
 
       <FinalStepContainer ref={finalStepRef}>
-        <FinalStepContainerHead>
-          <FinalStepTitle>All done here!</FinalStepTitle>
-          <FinalStepHint>
-            All you have to do now, is include this notification in your email.
-          </FinalStepHint>
-        </FinalStepContainerHead>
+        {!notification && !loading && (
+          <FinalStepContent>
+            <FinalStepContainerHead>
+              <FinalStepTitle>Waiting for you</FinalStepTitle>
+              <FinalStepHint>
+                Fill up the field above to create a notification!
+              </FinalStepHint>
+            </FinalStepContainerHead>
+          </FinalStepContent>
+        )}
 
-        <p>
-          To do this, add the following URL as a image anywhere in your email:
-        </p>
+        {!notification && loading && (
+          <FinalStepContent>
+            <FinalStepContainerHead>
+              <FinalStepTitle>Almost there...</FinalStepTitle>
+              <FinalStepHint>
+                Hold up a little while we setup your notification!
+              </FinalStepHint>
+            </FinalStepContainerHead>
+          </FinalStepContent>
+        )}
 
-        <CodeSnippet>
-          <CodeSnippetCopyButton>COPY</CodeSnippetCopyButton>
-          <p>
-            https://email-visualization-notifier.herokuapp.com/notify/e82=0232e-719c-4406-a6d4-399557fc9559
-          </p>
-        </CodeSnippet>
+        {notification && !loading && (
+          <FinalStepContent>
+            <FinalStepContainerHead>
+              <FinalStepTitle>All done here!</FinalStepTitle>
+              <FinalStepHint>
+                All you have to do now, is include this notification in your
+                email.
+              </FinalStepHint>
+            </FinalStepContainerHead>
 
-        <p>
-          Or, you can paste the following HTML snippet, if the e-mail client you
-          use supports this:
-        </p>
+            <p>
+              To do this, add the following URL as a image anywhere in your
+              email:
+            </p>
 
-        <CodeSnippet>
-          <CodeSnippetCopyButton>COPY</CodeSnippetCopyButton>
-          <p>
-            {
-              '<img href="https://email-visualization-notifier.herokuapp.com/notify/e82=0232e-719c-4406-a6d4-399557fc9559" />'
-            }
-          </p>
-        </CodeSnippet>
+            <CodeSnippet>
+              <CodeSnippetCopyButton>COPY</CodeSnippetCopyButton>
+              <p>
+                {`${process.env.REACT_APP_API_URL}/notify/${notification.id}`}
+              </p>
+            </CodeSnippet>
 
-        <p>
-          After this, you’ll be notified at {email} everytime your email is
-          viewed, for the next 7 days!
-        </p>
+            <p>
+              Or, you can paste the following HTML snippet, if the e-mail client
+              you use supports this:
+            </p>
+
+            <CodeSnippet>
+              <CodeSnippetCopyButton>COPY</CodeSnippetCopyButton>
+              <p>
+                {`<img href="${process.env.REACT_APP_API_URL}/notify/${notification.id}"/>`}
+              </p>
+            </CodeSnippet>
+
+            <p>
+              After this, you’ll be notified at {notification.sender} everytime
+              your email is viewed, for the next{' '}
+              {differenceInDays(notification.expiration, new Date())} days!
+            </p>
+          </FinalStepContent>
+        )}
       </FinalStepContainer>
     </Container>
   );

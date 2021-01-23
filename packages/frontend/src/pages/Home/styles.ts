@@ -187,11 +187,17 @@ export const SecondaryStepContainer = styled(PrimaryStepContainer)`
 
 export const FinalStepContainer = styled.div`
   display: flex;
-  height: 100vh;
   flex-direction: column;
   justify-content: center;
   background: ${colors.secondary};
   color: ${colors.textDark};
+`;
+
+export const FinalStepContent = styled.div`
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
   padding: 4rem 1.5rem;
 
   & > p {
