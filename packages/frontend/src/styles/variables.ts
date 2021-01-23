@@ -6,7 +6,6 @@ export const colors = {
   accent: '#FFCC53',
   textLight: '#FFFFFF',
   textDark: '#000000',
-  neutralGray: '#C4C4C4',
 };
 
 export const mediaBreaks = {

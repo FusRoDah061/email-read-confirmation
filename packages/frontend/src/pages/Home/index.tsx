@@ -13,6 +13,7 @@ import {
   StepDescription,
   Button,
   FinalStepContainer,
+  FinalStepContainerHead,
   FinalStepTitle,
   FinalStepHint,
   CodeSnippet,
@@ -126,10 +127,12 @@ const Home: React.FC = () => {
       </PrimaryStepContainer>
 
       <FinalStepContainer>
-        <FinalStepTitle>All done here!</FinalStepTitle>
-        <FinalStepHint>
-          All you have to do now, is include this notification in your email.
-        </FinalStepHint>
+        <FinalStepContainerHead>
+          <FinalStepTitle>All done here!</FinalStepTitle>
+          <FinalStepHint>
+            All you have to do now, is include this notification in your email.
+          </FinalStepHint>
+        </FinalStepContainerHead>
 
         <p>
           To do this, add the following URL as a image anywhere in your email:

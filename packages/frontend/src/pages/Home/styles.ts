@@ -154,7 +154,7 @@ export const StepHint = styled.p`
 export const StepDescription = styled.p`
   width: 100%;
   font-size: 1.4rem;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   text-align: left;
 `;
 
@@ -185,12 +185,65 @@ export const SecondaryStepContainer = styled(PrimaryStepContainer)`
   }
 `;
 
-export const FinalStepContainer = styled.div``;
+export const FinalStepContainer = styled.div`
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  background: ${colors.secondary};
+  color: ${colors.textDark};
+  padding: 4rem 1.5rem;
 
-export const FinalStepTitle = styled.p``;
+  & > p {
+    font-size: 1.4rem;
+    text-align: center;
+    margin: 1.5rem 0;
+  }
+`;
 
-export const FinalStepHint = styled.p``;
+export const FinalStepContainerHead = styled.div`
+  margin-bottom: 4rem;
+`;
 
-export const CodeSnippet = styled.div``;
+export const FinalStepTitle = styled.p`
+  width: 100%;
+  font: 900 2.5rem 'Maven Pro', sans-serif;
+  text-align: center;
+  margin-bottom: 1.5rem;
+`;
 
-export const CodeSnippetCopyButton = styled.button``;
+export const FinalStepHint = styled.p`
+  width: 100%;
+  text-align: center;
+  font-size: 1.6rem;
+`;
+
+export const CodeSnippet = styled.div`
+  position: relative;
+  background: ${colors.secondaryVariant};
+  border-radius: 1rem;
+  padding: 2rem 1.2rem;
+
+  p {
+    font: 400 1.1rem 'Roboto Mono', monospace;
+    text-align: center;
+  }
+`;
+
+export const CodeSnippetCopyButton = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: none;
+  border-top-left-radius: 1rem;
+  background: ${darken(0.2, colors.secondaryVariant)};
+  text-transform: uppercase;
+  font-size: 1rem;
+  padding: 0.4rem 2rem;
+  opacity: 0.7;
+  transition: 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
