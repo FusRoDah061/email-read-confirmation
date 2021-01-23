@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   Container,
   Jumbotron,
@@ -24,6 +24,36 @@ import mailIcon from '../../assets/mail-icon.svg';
 import arrowsDown from '../../assets/arrows-down.svg';
 
 const Home: React.FC = () => {
+  const firstStepRef = useRef<HTMLElement>(null);
+  const notificationDescriptionRef = useRef<HTMLInputElement>(null);
+
+  const secondStepRef = useRef<HTMLElement>(null);
+  const notificationEmailRef = useRef<HTMLInputElement>(null);
+
+  const thirdStepRef = useRef<HTMLElement>(null);
+  const recipientRef = useRef<HTMLInputElement>(null);
+
+  const finalStepRef = useRef<HTMLDivElement>(null);
+
+  const scrollToFirstStep = useCallback(() => {
+    firstStepRef.current?.scrollIntoView({ behavior: 'smooth' });
+    notificationDescriptionRef.current?.focus({ preventScroll: true });
+  }, []);
+
+  const handleSecondStep = useCallback(() => {
+    secondStepRef.current?.scrollIntoView({ behavior: 'smooth' });
+    notificationEmailRef.current?.focus({ preventScroll: true });
+  }, []);
+
+  const handleThirdStep = useCallback(() => {
+    thirdStepRef.current?.scrollIntoView({ behavior: 'smooth' });
+    recipientRef.current?.focus({ preventScroll: true });
+  }, []);
+
+  const handleFinish = useCallback(() => {
+    finalStepRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
   return (
     <Container>
       <Jumbotron>
@@ -33,13 +63,13 @@ const Home: React.FC = () => {
 
         <img src={mailIcon} alt="Mail icon" />
 
-        <StartButton>
+        <StartButton onClick={scrollToFirstStep}>
           START
           <img src={arrowsDown} alt="Arrows pointing down" />
         </StartButton>
       </Jumbotron>
 
-      <PrimaryStepContainer>
+      <PrimaryStepContainer ref={firstStepRef}>
         <StepLabelColumn>
           <StepLabel>
             <p>
@@ -53,7 +83,11 @@ const Home: React.FC = () => {
             Give your notification a description:
           </label>
           <InputWrapper>
-            <input id="js-description-input" type="text" />
+            <input
+              ref={notificationDescriptionRef}
+              id="js-description-input"
+              type="text"
+            />
           </InputWrapper>
 
           <StepHint>This is how we will identify this notification</StepHint>
@@ -64,11 +98,11 @@ const Home: React.FC = () => {
             identify it, too.
           </StepDescription>
 
-          <Button>NEXT</Button>
+          <Button onClick={handleSecondStep}>NEXT</Button>
         </StepFormColumn>
       </PrimaryStepContainer>
 
-      <SecondaryStepContainer>
+      <SecondaryStepContainer ref={secondStepRef}>
         <StepLabelColumn>
           <StepLabel>
             <p>
@@ -82,7 +116,11 @@ const Home: React.FC = () => {
             Tell us the e-mail address we will notify:
           </label>
           <InputWrapper>
-            <input id="js-description-input" type="email" />
+            <input
+              ref={notificationEmailRef}
+              id="js-description-input"
+              type="email"
+            />
           </InputWrapper>
 
           <StepHint>
@@ -92,11 +130,11 @@ const Home: React.FC = () => {
             So you won’t need an account. Cool, right?
           </StepDescription>
 
-          <Button>NEXT</Button>
+          <Button onClick={handleThirdStep}>NEXT</Button>
         </StepFormColumn>
       </SecondaryStepContainer>
 
-      <PrimaryStepContainer>
+      <PrimaryStepContainer ref={thirdStepRef}>
         <StepLabelColumn>
           <StepLabel>
             <p>
@@ -110,7 +148,7 @@ const Home: React.FC = () => {
             Optionally, tell us who will read the e-mail:
           </label>
           <InputWrapper>
-            <input id="js-description-input" type="text" />
+            <input ref={recipientRef} id="js-description-input" type="text" />
           </InputWrapper>
 
           <StepHint>
@@ -122,11 +160,11 @@ const Home: React.FC = () => {
             is enough.
           </StepDescription>
 
-          <Button>FINISH</Button>
+          <Button onClick={handleFinish}>FINISH</Button>
         </StepFormColumn>
       </PrimaryStepContainer>
 
-      <FinalStepContainer>
+      <FinalStepContainer ref={finalStepRef}>
         <FinalStepContainerHead>
           <FinalStepTitle>All done here!</FinalStepTitle>
           <FinalStepHint>
