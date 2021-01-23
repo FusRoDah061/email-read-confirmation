@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   Container,
   Jumbotron,
@@ -24,6 +24,10 @@ import mailIcon from '../../assets/mail-icon.svg';
 import arrowsDown from '../../assets/arrows-down.svg';
 
 const Home: React.FC = () => {
+  const [description, setDescription] = useState('');
+  const [email, setEmail] = useState('');
+  const [recipient, setRecipient] = useState('');
+
   const firstStepRef = useRef<HTMLElement>(null);
   const notificationDescriptionRef = useRef<HTMLInputElement>(null);
 
@@ -87,6 +91,8 @@ const Home: React.FC = () => {
               ref={notificationDescriptionRef}
               id="js-description-input"
               type="text"
+              value={description}
+              onChange={e => setDescription(e.target.value)}
             />
           </InputWrapper>
 
@@ -120,6 +126,8 @@ const Home: React.FC = () => {
               ref={notificationEmailRef}
               id="js-description-input"
               type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
           </InputWrapper>
 
@@ -148,7 +156,13 @@ const Home: React.FC = () => {
             Optionally, tell us who will read the e-mail:
           </label>
           <InputWrapper>
-            <input ref={recipientRef} id="js-description-input" type="text" />
+            <input
+              ref={recipientRef}
+              id="js-description-input"
+              type="text"
+              value={recipient}
+              onChange={e => setRecipient(e.target.value)}
+            />
           </InputWrapper>
 
           <StepHint>
@@ -160,7 +174,9 @@ const Home: React.FC = () => {
             is enough.
           </StepDescription>
 
-          <Button onClick={handleFinish}>FINISH</Button>
+          <Button onClick={handleFinish}>
+            {recipient ? 'FINISH' : 'SKIP & FINISH'}
+          </Button>
         </StepFormColumn>
       </PrimaryStepContainer>
 
@@ -198,7 +214,7 @@ const Home: React.FC = () => {
         </CodeSnippet>
 
         <p>
-          After this, you’ll be notified at {'<email>'} everytime your email is
+          After this, you’ll be notified at {email} everytime your email is
           viewed, for the next 7 days!
         </p>
       </FinalStepContainer>
