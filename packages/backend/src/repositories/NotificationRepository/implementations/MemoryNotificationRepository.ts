@@ -2,6 +2,7 @@ import { uuid } from 'uuidv4';
 import Notification from '../../../entities/Notification';
 import NotificationRepository, {
   CreateNotificationDTO,
+  FindBySenderAndDescriptionDTO,
 } from '../models/NotificationRepository';
 
 export default class MemoryNotificationRepository
@@ -53,6 +54,17 @@ export default class MemoryNotificationRepository
 
       return this.notifications[notificationIndex];
     }
+
+    return notification;
+  }
+
+  public findBySenderAndDescription({
+    sender,
+    description,
+  }: FindBySenderAndDescriptionDTO): Notification | undefined {
+    const notification = this.notifications.find(n => {
+      return n.description === description && n.sender === sender;
+    });
 
     return notification;
   }

@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { addDays } from 'date-fns';
 import Notification from '../entities/Notification';
 import NotificationRepository from '../repositories/NotificationRepository/models/NotificationRepository';
+import AppError from '../error/AppError';
 
 interface RequestDTO {
   sender: string;
@@ -17,6 +18,14 @@ export default class CreateNotificationService {
   ) {}
 
   public execute({ sender, description, recipient }: RequestDTO): Notification {
+    const notificationExists = this.notificationRepository.findBySenderAndDescription(
+      { sender, description },
+    );
+
+    if (notificationExists) {
+      throw new AppError('This notification already exists');
+    }
+
     const notification = this.notificationRepository.create({
       sender,
       description,

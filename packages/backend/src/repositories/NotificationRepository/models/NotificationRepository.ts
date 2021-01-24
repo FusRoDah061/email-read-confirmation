@@ -8,8 +8,16 @@ export interface CreateNotificationDTO {
   recipient?: string;
 }
 
+export interface FindBySenderAndDescriptionDTO {
+  sender: string;
+  description: string;
+}
+
 export default interface NotificationRepository {
   create(data: CreateNotificationDTO): Notification;
   findById(notificationId: string): Notification | undefined;
+  findBySenderAndDescription(
+    data: FindBySenderAndDescriptionDTO,
+  ): Notification | undefined;
   save(notification: Notification): Notification;
 }
