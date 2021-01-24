@@ -40,29 +40,23 @@ const Home: React.FC = () => {
   const [notification, setNotification] = useState<Notification | undefined>();
 
   const firstStepRef = useRef<HTMLElement>(null);
-  const notificationDescriptionRef = useRef<HTMLInputElement>(null);
 
   const secondStepRef = useRef<HTMLElement>(null);
-  const notificationEmailRef = useRef<HTMLInputElement>(null);
 
   const thirdStepRef = useRef<HTMLElement>(null);
-  const recipientRef = useRef<HTMLInputElement>(null);
 
   const finalStepRef = useRef<HTMLDivElement>(null);
 
   const scrollToFirstStep = useCallback(() => {
     firstStepRef.current?.scrollIntoView({ behavior: 'smooth' });
-    notificationDescriptionRef.current?.focus({ preventScroll: true });
   }, []);
 
   const handleSecondStep = useCallback(() => {
     secondStepRef.current?.scrollIntoView({ behavior: 'smooth' });
-    notificationEmailRef.current?.focus({ preventScroll: true });
   }, []);
 
   const handleThirdStep = useCallback(() => {
     thirdStepRef.current?.scrollIntoView({ behavior: 'smooth' });
-    recipientRef.current?.focus({ preventScroll: true });
   }, []);
 
   const handleFinish = useCallback(async () => {
@@ -125,7 +119,6 @@ const Home: React.FC = () => {
           </label>
           <InputWrapper>
             <input
-              ref={notificationDescriptionRef}
               id="js-description-input"
               type="text"
               value={description}
@@ -161,7 +154,6 @@ const Home: React.FC = () => {
           </label>
           <InputWrapper>
             <input
-              ref={notificationEmailRef}
               id="js-description-input"
               type="email"
               value={email}
@@ -195,7 +187,6 @@ const Home: React.FC = () => {
           </label>
           <InputWrapper>
             <input
-              ref={recipientRef}
               id="js-description-input"
               type="text"
               value={recipient}
