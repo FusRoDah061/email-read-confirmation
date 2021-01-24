@@ -19,13 +19,15 @@
     "@types/react-dom": "^16.9.8",
     "axios": "^0.21.1",
     "date-fns": "^2.16.1",
+    "formik": "^2.2.6",
     "polished": "^4.0.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-is": "^17.0.1",
     "react-scripts": "4.0.1",
     "styled-components": "^5.2.1",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "yup": "^0.32.8"
   },
   "browserslist": {
     "production": [

@@ -1,15 +1,19 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { differenceInDays, parseISO } from 'date-fns';
+import { Formik, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
 import {
   Container,
   Jumbotron,
   StartButton,
+  NotificationForm,
   PrimaryStepContainer,
   SecondaryStepContainer,
   StepLabelColumn,
   StepLabel,
   StepFormColumn,
   InputWrapper,
+  ErrorMessageBox,
   StepHint,
   StepDescription,
   Button,
@@ -32,10 +36,31 @@ interface Notification {
   expiration: Date;
 }
 
+interface FormValues {
+  description: string;
+  email: string;
+  recipient: string;
+}
+
+const FORM_SCHEMA = Yup.object().shape({
+  description: Yup.string()
+    .max(100, 'The description field should be longer than 100 characters!')
+    .required('A description is required'),
+  email: Yup.string()
+    .email('Invalid e-mail')
+    .max(256, 'E-mail should not be longer than 256 characters!')
+    .required('An e-mail is required to send this notification'),
+  recipient: Yup.string()
+    .optional()
+    .max(100, 'The recipient filed should be longer than 100 characters!'),
+});
+
 const Home: React.FC = () => {
-  const [description, setDescription] = useState('');
-  const [email, setEmail] = useState('');
-  const [recipient, setRecipient] = useState('');
+  const initialValues: FormValues = {
+    description: '',
+    email: '',
+    recipient: '',
+  };
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState<Notification | undefined>();
 
@@ -51,37 +76,53 @@ const Home: React.FC = () => {
     firstStepRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  const handleSecondStep = useCallback(() => {
+  const scrollToSecondStep = useCallback(() => {
     secondStepRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  const handleThirdStep = useCallback(() => {
+  const scrollToThirdStep = useCallback(() => {
     thirdStepRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  const handleFinish = useCallback(async () => {
-    setLoading(true);
+  const onSubmit = useCallback(
+    async (
+      { description, email, recipient }: FormValues,
+      { setSubmitting }: FormikHelpers<FormValues>,
+    ) => {
+      setLoading(true);
+      setSubmitting(true);
 
-    finalStepRef.current?.scrollIntoView({ behavior: 'smooth' });
+      finalStepRef.current?.scrollIntoView({ behavior: 'smooth' });
 
-    const response = await api.createNotification({
-      description,
-      sender: email,
-      recipient,
-    });
-
-    if (response.status === 200) {
-      const { id, sender, expiration } = response.data;
-
-      setNotification({
-        id,
-        sender,
-        expiration: parseISO(expiration),
+      const response = await api.createNotification({
+        description,
+        sender: email,
+        recipient,
       });
-    }
 
-    setLoading(false);
-  }, [description, email, recipient]);
+      if (response.status === 200) {
+        const { id, sender, expiration } = response.data;
+
+        setNotification({
+          id,
+          sender,
+          expiration: parseISO(expiration),
+        });
+      }
+
+      setSubmitting(false);
+      setLoading(false);
+    },
+    [],
+  );
+
+  const handleSecondStep = useCallback(() => {
+    scrollToSecondStep();
+  }, [scrollToSecondStep]);
+
+  const handleThirdStep = useCallback(() => {
+    scrollToThirdStep();
+  }, [scrollToThirdStep]);
 
   const handleCopy = useCallback(async (text: string) => {
     if ('clipboard' in navigator) {
@@ -104,110 +145,161 @@ const Home: React.FC = () => {
         </StartButton>
       </Jumbotron>
 
-      <PrimaryStepContainer ref={firstStepRef}>
-        <StepLabelColumn>
-          <StepLabel>
-            <p>
-              <span>Step</span> 1
-            </p>
-          </StepLabel>
-        </StepLabelColumn>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={FORM_SCHEMA}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleSubmit,
+          isSubmitting,
+        }) => (
+          <NotificationForm onSubmit={handleSubmit}>
+            <PrimaryStepContainer ref={firstStepRef}>
+              <StepLabelColumn>
+                <StepLabel>
+                  <p>
+                    <span>Step</span> 1
+                  </p>
+                </StepLabel>
+              </StepLabelColumn>
 
-        <StepFormColumn>
-          <label htmlFor="js-description-input">
-            Give your notification a description:
-          </label>
-          <InputWrapper>
-            <input
-              id="js-description-input"
-              type="text"
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-              maxLength={100}
-            />
-          </InputWrapper>
+              <StepFormColumn>
+                <label htmlFor="js-description-input">
+                  Give your notification a description:
+                </label>
+                <InputWrapper>
+                  <input
+                    id="js-description-input"
+                    type="text"
+                    name="description"
+                    value={values.description}
+                    onChange={handleChange}
+                    maxLength={100}
+                  />
+                </InputWrapper>
+                {touched.description &&
+                  errors.description &&
+                  (() => {
+                    scrollToFirstStep();
+                    return (
+                      <ErrorMessageBox>{errors.description}</ErrorMessageBox>
+                    );
+                  })()}
 
-          <StepHint>This is how we will identify this notification</StepHint>
-          <StepDescription>
-            Since we don’t hold any reference to the e-mail you’ll send, one
-            notification can be used on multiple different e-mails, so this
-            description will be sent on the read notification so you can
-            identify it, too.
-          </StepDescription>
+                <StepHint>
+                  This is how we will identify this notification
+                </StepHint>
+                <StepDescription>
+                  Since we don’t hold any reference to the e-mail you’ll send,
+                  one notification can be used on multiple different e-mails, so
+                  this description will be sent on the read notification so you
+                  can identify it, too.
+                </StepDescription>
 
-          <Button onClick={handleSecondStep}>NEXT</Button>
-        </StepFormColumn>
-      </PrimaryStepContainer>
+                <Button type="button" onClick={handleSecondStep}>
+                  NEXT
+                </Button>
+              </StepFormColumn>
+            </PrimaryStepContainer>
 
-      <SecondaryStepContainer ref={secondStepRef}>
-        <StepLabelColumn>
-          <StepLabel>
-            <p>
-              <span>Step</span> 2
-            </p>
-          </StepLabel>
-        </StepLabelColumn>
+            <SecondaryStepContainer ref={secondStepRef}>
+              <StepLabelColumn>
+                <StepLabel>
+                  <p>
+                    <span>Step</span> 2
+                  </p>
+                </StepLabel>
+              </StepLabelColumn>
 
-        <StepFormColumn>
-          <label htmlFor="js-description-input">
-            Tell us the e-mail address we will notify:
-          </label>
-          <InputWrapper>
-            <input
-              id="js-description-input"
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
-          </InputWrapper>
+              <StepFormColumn>
+                <label htmlFor="js-email-input">
+                  Tell us the e-mail address we will notify:
+                </label>
+                <InputWrapper>
+                  <input
+                    id="js-email-input"
+                    name="email"
+                    type="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    maxLength={256}
+                  />
+                </InputWrapper>
+                {touched.email &&
+                  errors.email &&
+                  (() => {
+                    if (!errors.description) scrollToSecondStep();
+                    return <ErrorMessageBox>{errors.email}</ErrorMessageBox>;
+                  })()}
 
-          <StepHint>
-            This is the address the notifications will be sent to
-          </StepHint>
-          <StepDescription>
-            So you won’t need an account. Cool, right?
-          </StepDescription>
+                <StepHint>
+                  This is the address the notifications will be sent to
+                </StepHint>
+                <StepDescription>
+                  So you won’t need an account. Cool, right?
+                </StepDescription>
 
-          <Button onClick={handleThirdStep}>NEXT</Button>
-        </StepFormColumn>
-      </SecondaryStepContainer>
+                <Button type="button" onClick={handleThirdStep}>
+                  NEXT
+                </Button>
+              </StepFormColumn>
+            </SecondaryStepContainer>
 
-      <PrimaryStepContainer ref={thirdStepRef}>
-        <StepLabelColumn>
-          <StepLabel>
-            <p>
-              <span>Step</span> 3 <span>Optional</span>
-            </p>
-          </StepLabel>
-        </StepLabelColumn>
+            <PrimaryStepContainer ref={thirdStepRef}>
+              <StepLabelColumn>
+                <StepLabel>
+                  <p>
+                    <span>Step</span> 3 <span>Optional</span>
+                  </p>
+                </StepLabel>
+              </StepLabelColumn>
 
-        <StepFormColumn>
-          <label htmlFor="js-description-input">
-            Optionally, tell us who will read the e-mail:
-          </label>
-          <InputWrapper>
-            <input
-              id="js-description-input"
-              type="text"
-              value={recipient}
-              onChange={e => setRecipient(e.target.value)}
-            />
-          </InputWrapper>
+              <StepFormColumn>
+                <label htmlFor="js-recipient-input">
+                  Optionally, tell us who will read the e-mail:
+                </label>
+                <InputWrapper>
+                  <input
+                    id="js-recipient-input"
+                    type="text"
+                    name="recipient"
+                    value={values.recipient}
+                    onChange={handleChange}
+                    maxLength={100}
+                  />
+                </InputWrapper>
+                {touched.recipient &&
+                  errors.recipient &&
+                  (() => {
+                    if (!errors.description && !errors.email)
+                      scrollToThirdStep();
+                    return (
+                      <ErrorMessageBox>{errors.recipient}</ErrorMessageBox>
+                    );
+                  })()}
 
-          <StepHint>
-            This will only be used to display in the notification
-          </StepHint>
-          <StepDescription>
-            This is useful so you can better identify this e-mail from the
-            notification. You can leave this empty if you think the description
-            is enough.
-          </StepDescription>
+                <StepHint>
+                  This will only be used to display in the notification
+                </StepHint>
+                <StepDescription>
+                  This is useful so you can better identify this e-mail from the
+                  notification. You can leave this empty if you think the
+                  description is enough.
+                </StepDescription>
 
-          <Button onClick={handleFinish}>
-            {recipient ? 'FINISH' : 'SKIP & FINISH'}
-          </Button>
-        </StepFormColumn>
-      </PrimaryStepContainer>
+                <Button type="submit" disabled={isSubmitting}>
+                  {values.recipient ? 'FINISH' : 'SKIP & FINISH'}
+                </Button>
+              </StepFormColumn>
+            </PrimaryStepContainer>
+          </NotificationForm>
+        )}
+      </Formik>
 
       <FinalStepContainer ref={finalStepRef}>
         {!notification && !loading && (

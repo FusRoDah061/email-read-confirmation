@@ -66,6 +66,8 @@ export const StartButton = styled.button`
   }
 `;
 
+export const NotificationForm = styled.form``;
+
 export const StepLabelColumn = styled.div`
   position: relative;
   display: flex;
@@ -141,6 +143,18 @@ export const InputWrapper = styled.div`
     border-bottom: 0.3rem solid ${colors.accent};
     font-size: 1.6rem;
   }
+`;
+
+export const ErrorMessageBox = styled.p`
+  width: 100%;
+  text-align: left;
+  margin-bottom: 1.5rem;
+  background: ${colors.error};
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: ${colors.textLight};
 `;
 
 export const StepHint = styled.p`
