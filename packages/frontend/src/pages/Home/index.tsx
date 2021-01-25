@@ -20,6 +20,7 @@ import {
   FinalStepContainer,
   FinalStepContent,
   FinalStepContainerHead,
+  FinalStepErrorsContainer,
   FinalStepTitle,
   FinalStepHint,
   CodeSnippet,
@@ -47,9 +48,9 @@ const FORM_SCHEMA = Yup.object().shape({
     .max(100, 'The description field should be longer than 100 characters!')
     .required('A description is required'),
   email: Yup.string()
-    .email('Invalid e-mail')
-    .max(256, 'E-mail should not be longer than 256 characters!')
-    .required('An e-mail is required to send this notification'),
+    .email('Invalid email')
+    .max(256, 'Email should not be longer than 256 characters!')
+    .required('An email is required to send this notification'),
   recipient: Yup.string()
     .optional()
     .max(100, 'The recipient filed should be longer than 100 characters!'),
@@ -63,6 +64,7 @@ const Home: React.FC = () => {
   };
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState<Notification | undefined>();
+  const [requestErrors, setRequestErrors] = useState<string[]>([]);
 
   const firstStepRef = useRef<HTMLElement>(null);
 
@@ -89,29 +91,48 @@ const Home: React.FC = () => {
       { description, email, recipient }: FormValues,
       { setSubmitting }: FormikHelpers<FormValues>,
     ) => {
+      setNotification(undefined);
+      setRequestErrors([]);
       setLoading(true);
       setSubmitting(true);
 
       finalStepRef.current?.scrollIntoView({ behavior: 'smooth' });
 
-      const response = await api.createNotification({
-        description,
-        sender: email,
-        recipient,
-      });
-
-      if (response.status === 200) {
-        const { id, sender, expiration } = response.data;
-
-        setNotification({
-          id,
-          sender,
-          expiration: parseISO(expiration),
+      try {
+        const response = await api.createNotification({
+          description,
+          sender: email,
+          recipient,
         });
-      }
 
-      setSubmitting(false);
-      setLoading(false);
+        if (response.status === 200) {
+          const { id, sender, expiration } = response.data;
+
+          setNotification({
+            id,
+            sender,
+            expiration: parseISO(expiration),
+          });
+        }
+      } catch (err) {
+        const response = err.response.data;
+
+        if ('validation' in response) {
+          const { validation } = response;
+          const messages: string[] = [];
+
+          Object.keys(validation).forEach((key: string) => {
+            messages.push(validation[key].message);
+          });
+
+          setRequestErrors(messages);
+        } else {
+          setRequestErrors([response.message]);
+        }
+      } finally {
+        setSubmitting(false);
+        setLoading(false);
+      }
     },
     [],
   );
@@ -300,7 +321,7 @@ const Home: React.FC = () => {
       </Formik>
 
       <FinalStepContainer ref={finalStepRef}>
-        {!notification && !loading && (
+        {requestErrors.length <= 0 && !notification && !loading && (
           <FinalStepContent>
             <FinalStepContainerHead>
               <FinalStepTitle>Waiting for you</FinalStepTitle>
@@ -311,7 +332,7 @@ const Home: React.FC = () => {
           </FinalStepContent>
         )}
 
-        {!notification && loading && (
+        {requestErrors.length <= 0 && !notification && loading && (
           <FinalStepContent>
             <FinalStepContainerHead>
               <FinalStepTitle>Almost there...</FinalStepTitle>
@@ -322,7 +343,24 @@ const Home: React.FC = () => {
           </FinalStepContent>
         )}
 
-        {notification && !loading && (
+        {requestErrors.length > 0 && (
+          <FinalStepContent>
+            <FinalStepContainerHead>
+              <FinalStepTitle>Uh oh!</FinalStepTitle>
+              <FinalStepHint>
+                We found some problems while creating your notification:
+              </FinalStepHint>
+
+              <FinalStepErrorsContainer>
+                {requestErrors.map((error: string) => {
+                  return <p key={error}>{error}</p>;
+                })}
+              </FinalStepErrorsContainer>
+            </FinalStepContainerHead>
+          </FinalStepContent>
+        )}
+
+        {requestErrors.length <= 0 && notification && !loading && (
           <FinalStepContent>
             <FinalStepContainerHead>
               <FinalStepTitle>All done here!</FinalStepTitle>

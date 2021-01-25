@@ -312,6 +312,16 @@ export const FinalStepContainerHead = styled.div`
   margin-bottom: 4rem;
 `;
 
+export const FinalStepErrorsContainer = styled.div`
+  p {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: ${colors.error};
+  }
+`;
+
 export const FinalStepTitle = styled.p`
   width: 100%;
   font: 900 2.5rem 'Maven Pro', sans-serif;
