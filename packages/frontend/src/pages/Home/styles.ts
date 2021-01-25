@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { darken, transparentize } from 'polished';
-import { colors } from '../../styles/variables';
+import { colors, mediaBreaks } from '../../styles/variables';
 
 export const Container = styled.main`
   width: 100%;
@@ -43,6 +43,18 @@ export const Jumbotron = styled.section`
     width: 24rem;
     margin-bottom: 20vh;
   }
+
+  @media screen and (min-width: ${mediaBreaks.mobile}) {
+    h1 {
+      max-width: 30rem;
+      font-size: 3.2rem;
+    }
+
+    & > img {
+      margin-left: -9.6rem;
+      width: 29rem;
+    }
+  }
 `;
 
 export const StartButton = styled.button`
@@ -82,6 +94,19 @@ export const StepLabelColumn = styled.div`
     top: 0;
     z-index: 0;
   }
+
+  @media screen and (min-width: ${mediaBreaks.mobile}) {
+    grid-area: step;
+    align-items: center;
+
+    &::after {
+      height: 50%;
+      width: 0.5rem;
+      background: ${colors.primaryVariant};
+      top: 50%;
+      z-index: 0;
+    }
+  }
 `;
 
 export const PrimaryStepContainer = styled.section`
@@ -94,9 +119,24 @@ export const PrimaryStepContainer = styled.section`
   &:last-of-type ${StepLabelColumn}::after {
     content: none;
   }
+
+  @media screen and (min-width: ${mediaBreaks.mobile}) {
+    display: grid;
+    grid-template-areas: 'step form';
+    grid-template-columns: 50% 50%;
+    padding: 0 15%;
+
+    &:last-of-type ${StepLabelColumn}::after {
+      content: '';
+      top: 0;
+    }
+  }
 `;
 
 export const StepLabel = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 3.8rem;
   height: 3.8rem;
   text-align: center;
@@ -105,12 +145,23 @@ export const StepLabel = styled.div`
   border-radius: 50%;
   z-index: 1;
 
-  p {
-    line-height: 3.8rem;
-  }
-
   span {
     display: none;
+  }
+
+  @media screen and (min-width: ${mediaBreaks.mobile}) {
+    width: 13rem;
+    height: 13rem;
+    font-size: 2rem;
+
+    span {
+      display: inline;
+    }
+
+    span:nth-child(2) {
+      display: block;
+      font: 400 1.5rem 'Open sans', sans-serif;
+    }
   }
 `;
 
@@ -120,11 +171,21 @@ export const StepFormColumn = styled.div`
   align-items: center;
   justify-content: center;
   padding-top: 0.9rem;
+  flex: 1;
 
   label {
     width: 100%;
     font-size: 1.5rem;
     margin-bottom: 3rem;
+  }
+
+  @media screen and (min-width: ${mediaBreaks.mobile}) {
+    grid-area: form;
+    padding: 0.9rem 4rem;
+
+    label {
+      margin-bottom: 1rem;
+    }
   }
 `;
 
@@ -163,6 +224,10 @@ export const StepHint = styled.p`
   font-size: 1.4rem;
   margin-bottom: 1.2rem;
   text-align: left;
+
+  @media screen and (min-width: ${mediaBreaks.mobile}) {
+    margin-top: 1rem;
+  }
 `;
 
 export const StepDescription = styled.p`
@@ -170,6 +235,10 @@ export const StepDescription = styled.p`
   font-size: 1.4rem;
   margin-bottom: 3rem;
   text-align: left;
+
+  @media screen and (min-width: ${mediaBreaks.mobile}) {
+    margin-bottom: 5rem;
+  }
 `;
 
 export const Button = styled.button`
@@ -197,12 +266,24 @@ export const SecondaryStepContainer = styled(PrimaryStepContainer)`
   ${StepLabel}, ${InputWrapper}, ${StepLabelColumn}::after {
     background: ${colors.secondaryVariant};
   }
+
+  @media screen and (min-width: ${mediaBreaks.mobile}) {
+    grid-template-areas: 'form step';
+
+    ${StepLabelColumn} {
+      &::after {
+        height: 100%;
+        top: 0;
+      }
+    }
+  }
 `;
 
 export const FinalStepContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   background: ${colors.secondary};
   color: ${colors.textDark};
 `;
@@ -218,6 +299,12 @@ export const FinalStepContent = styled.div`
     font-size: 1.4rem;
     text-align: center;
     margin: 1.5rem 0;
+  }
+
+  @media screen and (min-width: ${mediaBreaks.mobile}) {
+    width: 50%;
+    max-width: 800px;
+    min-width: 450px;
   }
 `;
 

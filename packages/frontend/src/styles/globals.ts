@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { colors } from './variables';
+import { colors, mediaBreaks } from './variables';
 
 export default createGlobalStyle`
   :root {
@@ -36,5 +36,11 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
+  }
+
+  @media screen and (min-width: ${mediaBreaks.mobile}) {
+    :root {
+      font-size: 62.5%;
+    }
   }
 `;
