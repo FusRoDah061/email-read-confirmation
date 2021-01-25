@@ -133,8 +133,8 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Jumbotron>
-        <h1>E-mail Read Notification</h1>
-        <h2>Be notified every time your e-mails are viewed!</h2>
+        <h1>Email Read Notification</h1>
+        <h2>Be notified every time your emails are viewed!</h2>
         <h3>No sign up or browser plugins needed.</h3>
 
         <img src={mailIcon} alt="Mail icon" />
@@ -195,10 +195,10 @@ const Home: React.FC = () => {
                   This is how we will identify this notification
                 </StepHint>
                 <StepDescription>
-                  Since we don’t hold any reference to the e-mail you’ll send,
-                  one notification can be used on multiple different e-mails, so
-                  this description will be sent on the read notification so you
-                  can identify it, too.
+                  Since we don&apos;t hold any references to the email
+                  you&apos;ll send, a single notification can be used on
+                  multiple different emails, so this description will be sent on
+                  the notification so you can identify it, too.
                 </StepDescription>
 
                 <Button type="button" onClick={handleSecondStep}>
@@ -218,7 +218,7 @@ const Home: React.FC = () => {
 
               <StepFormColumn>
                 <label htmlFor="js-email-input">
-                  Tell us the e-mail address we will notify:
+                  Tell us the email address we will notify:
                 </label>
                 <InputWrapper>
                   <input
@@ -241,7 +241,7 @@ const Home: React.FC = () => {
                   This is the address the notifications will be sent to
                 </StepHint>
                 <StepDescription>
-                  So you won’t need an account. Cool, right?
+                  So you won&apos;t need an account. Cool, right?
                 </StepDescription>
 
                 <Button type="button" onClick={handleThirdStep}>
@@ -261,7 +261,7 @@ const Home: React.FC = () => {
 
               <StepFormColumn>
                 <label htmlFor="js-recipient-input">
-                  Optionally, tell us who will read the e-mail:
+                  Optionally, tell us who will read the email:
                 </label>
                 <InputWrapper>
                   <input
@@ -283,11 +283,9 @@ const Home: React.FC = () => {
                     );
                   })()}
 
-                <StepHint>
-                  This will only be used to display in the notification
-                </StepHint>
+                <StepHint>This will only be used in the notification</StepHint>
                 <StepDescription>
-                  This is useful so you can better identify this e-mail from the
+                  This is useful so you can better identify this email from the
                   notification. You can leave this empty if you think the
                   description is enough.
                 </StepDescription>
@@ -307,7 +305,7 @@ const Home: React.FC = () => {
             <FinalStepContainerHead>
               <FinalStepTitle>Waiting for you</FinalStepTitle>
               <FinalStepHint>
-                Fill up the field above to create a notification!
+                Fill up the fields above to create a notification!
               </FinalStepHint>
             </FinalStepContainerHead>
           </FinalStepContent>
@@ -335,7 +333,7 @@ const Home: React.FC = () => {
             </FinalStepContainerHead>
 
             <p>
-              To do this, add the following URL as a image anywhere in your
+              To do this, add the following URL as an image anywhere in your
               email:
             </p>
 
@@ -355,8 +353,8 @@ const Home: React.FC = () => {
             </CodeSnippet>
 
             <p>
-              Or, you can paste the following HTML snippet, if the e-mail client
-              you use supports this:
+              Or, you can paste the following HTML snippet in your email body,
+              if the email client you&apos;re using supports this:
             </p>
 
             <CodeSnippet>
@@ -375,8 +373,8 @@ const Home: React.FC = () => {
             </CodeSnippet>
 
             <p>
-              After this, you’ll be notified at {notification.sender} everytime
-              your email is viewed, for the next{' '}
+              After this, you&apos;ll be notified at {notification.sender}{' '}
+              everytime your email is viewed, for the next{' '}
               {differenceInDays(notification.expiration, new Date())} days!
             </p>
           </FinalStepContent>
