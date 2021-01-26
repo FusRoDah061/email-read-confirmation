@@ -81,7 +81,11 @@ export default class CacheNotificationRepository
   async update(notification: Notification): Promise<Notification> {
     const key = `notification:id:${notification.id}`;
 
-    await this.cacheProvider.save(key, notification);
+    const ttl = Math.abs(
+      differenceInSeconds(notification.expiration, new Date()),
+    );
+
+    await this.cacheProvider.save(key, notification, { ttl });
 
     return notification;
   }
