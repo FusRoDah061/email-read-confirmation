@@ -1,0 +1,106 @@
+<style>
+  .message-content {
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 600px;
+    font-size: 20px;
+    line-height: 21px;
+    background-color: #fff;
+  }
+
+  .header {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background-color: #157EFF;
+    color: #fff;
+  }
+
+  .icon {
+    display: inline-block;
+    height: 25px;
+    margin-right: 25px;
+    float:left;
+  }
+
+  .title {
+    display: inline-block;
+    font-size: 25px;
+    color: #fff;
+  }
+
+  .body {
+    padding: 30px 20px;
+    padding-bottom: 20px;
+  }
+
+  p {
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    margin: 15px auto;
+    color: #000;
+  }
+
+  .last-view span,
+  .views span,
+  .location span {
+    font-weight: bold;
+  }
+
+  .recipient {
+    font-size: 12px;
+  }
+
+  .views {
+    margin-bottom: 30px;
+  }
+
+  .location {
+    font-size: 12px;
+  }
+
+  .notice {
+    font-size: 15px;
+    color: #fff;
+    padding: 10px 0px;
+    background-color: #157EFF;
+  }
+</style>
+
+<!-- Use https://templates.mailchimp.com/resources/inline-css/ to inline styles -->
+
+<div class="message-content">
+  <header class="header">
+    <img class="icon" src={{iconUrl}}/>
+
+    <h1 class="title">
+      Hello there!
+    </h1>
+  </header>
+
+  <div class="body">
+    <p class="last-view">
+      Your <span>{{description}}</span> e-mail was just viewed by someone!
+    </p>
+
+    <p class="recipient">
+      This someone could have been {{recipient}}
+    </p>
+
+    <p class="views">
+      It currently has <span>{{viewCount}}</span> views.
+    </p>
+
+    <p class="location">
+      {{#if viewerLocation}}
+      The viewer may be is located at or close to: </br><span>{{viewerLocation}}</span>
+      {{/if}}
+    </p>
+  </div>
+
+  <p class="notice">
+    We will keep you posted on future views until {{expiration}}
+  </p>
+</div>

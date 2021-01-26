@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { differenceInSeconds } from 'date-fns';
+import { differenceInSeconds, parseISO } from 'date-fns';
 import { inject, injectable } from 'tsyringe';
 import { v4 as uuid } from 'uuid';
 import Notification from '../../../entities/Notification';
@@ -82,7 +82,7 @@ export default class CacheNotificationRepository
     const key = `notification:id:${notification.id}`;
 
     const ttl = Math.abs(
-      differenceInSeconds(notification.expiration, new Date()),
+      differenceInSeconds(parseISO(notification.expiration), new Date()),
     );
 
     await this.cacheProvider.save(key, notification, { ttl });

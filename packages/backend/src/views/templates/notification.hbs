@@ -1,0 +1,122 @@
+<style>
+  .message-content {
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    line-height: 21px;
+    margin: auto;
+    background-color: #fff;
+  }
+
+  .header {
+    background-color: #157EFF;
+    color: #fff;
+  }
+
+  .header-content {
+    max-width: 800px;
+    margin: auto;
+    padding-top: 40px;
+    padding-bottom: 30px;
+  }
+
+  .icon {
+    display: inline-block;
+    height: 25px;
+    margin-right: 25px;
+    float: left;
+  }
+
+  .title {
+    display: inline-block;
+    font-size: 25px;
+    color: #fff;
+    margin: 0;
+  }
+
+  .body {
+    padding: 30px 20px;
+    padding-bottom: 20px;
+  }
+
+  p {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    margin: 15px auto;
+    color: #000;
+  }
+
+  .last-view span,
+  .views span,
+  .location span {
+    font-weight: bold;
+  }
+
+  .recipient {
+    font-size: 12px;
+  }
+
+  .views {
+    margin-bottom: 30px;
+  }
+
+  .location {
+    font-size: 12px;
+  }
+
+  .footer {
+    background-color: #157EFF;
+    padding: 10px 0px;
+  }
+
+  .notice {
+    font-size: 15px;
+    color: #fff;
+  }
+</style>
+
+<!-- Use https://templates.mailchimp.com/resources/inline-css/ to inline styles -->
+
+<div class="message-content"
+  style="width: 100%;font-family: Arial, Helvetica, sans-serif;font-size: 20px;line-height: 21px;margin: auto;background-color: #fff;">
+  <header class="header" style="background-color: #157EFF;color: #fff;">
+    <div class="header-content" style="max-width: 800px;margin: auto;padding-top: 40px;padding-bottom: 30px;">
+      <img class="icon" src="{{iconUrl}}/" style="display: inline-block;height: 25px;margin-right: 25px;float: left;">
+
+      <h1 class="title" style="display: inline-block;font-size: 25px;color: #fff;margin: 0;">
+        Hello there!
+      </h1>
+    </div>
+  </header>
+
+  <div class="body" style="padding: 30px 20px;padding-bottom: 20px;">
+    <p class="last-view" style="width: 100%;max-width: 800px;text-align: center;margin: 15px auto;color: #000;">
+      Your <span style="font-weight: bold;">{{description}}</span> e-mail was just viewed by someone!
+    </p>
+
+    <p class="recipient"
+      style="width: 100%;max-width: 800px;text-align: center;margin: 15px auto;color: #000;font-size: 12px;">
+      This someone could have been {{recipient}}
+    </p>
+
+    <p class="views"
+      style="width: 100%;max-width: 800px;text-align: center;margin: 15px auto;color: #000;margin-bottom: 30px;">
+      It currently has <span style="font-weight: bold;">{{viewCount}}</span> views.
+    </p>
+
+    <p class="location"
+      style="width: 100%;max-width: 800px;text-align: center;margin: 15px auto;color: #000;font-size: 12px;">
+      {{#if viewerLocation}}
+      The viewer may be is located at or close to: <span style="font-weight: bold;">{{viewerLocation}}</span>
+      {{/if}}
+    </p>
+  </div>
+
+  <footer class="footer" style="background-color: #157EFF;padding: 10px 0px;">
+    <p class="notice" style="width: 100%;max-width: 800px;text-align: center;margin: 15px auto;color: #fff;font-size: 15px;">
+      We will keep you posted on future views until {{expiration}}
+    </p>
+  </footer>
+
+</div>

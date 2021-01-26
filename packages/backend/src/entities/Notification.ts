@@ -3,6 +3,6 @@ export default interface Notification {
   sender: string;
   description: string;
   viewCount: number;
-  expiration: Date;
+  expiration: string;
   recipient?: string;
 }

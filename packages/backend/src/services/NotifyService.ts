@@ -1,3 +1,4 @@
+import { format, parseISO } from 'date-fns';
 import path from 'path';
 import { inject, injectable } from 'tsyringe';
 import IpLocationProvider from '../providers/IpLocationProvider/models/IpLocationProvider';
@@ -65,7 +66,7 @@ export default class NotifyService {
             file: path.join(
               __dirname,
               '..',
-              'assets',
+              'views',
               'templates',
               'notification.hbs',
             ),
@@ -73,6 +74,12 @@ export default class NotifyService {
               viewCount: updatedNotification.viewCount,
               description: updatedNotification.description,
               viewerLocation: viewerCity,
+              recipient: updatedNotification.recipient,
+              iconUrl: `${process.env.BACKEND_URL}/static/images/mail-icon.png`,
+              expiration: format(
+                parseISO(updatedNotification.expiration),
+                'MM/dd/yyyy',
+              ),
             },
           },
         });
@@ -83,13 +90,7 @@ export default class NotifyService {
       console.log('Notification not found.');
     }
 
-    const imagePath = path.join(
-      __dirname,
-      '..',
-      'assets',
-      'static',
-      'transparent.png',
-    );
+    const imagePath = path.join(__dirname, '..', 'assets', 'transparent.png');
     return imagePath;
   }
 }
