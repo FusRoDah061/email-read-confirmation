@@ -1,7 +1,7 @@
 import { container } from 'tsyringe';
-import MemoryNotificationRepository from './implementations/MemoryNotificationRepository';
+import CacheNotificationRepository from './implementations/CacheNotificationRepository';
 
-container.registerInstance(
+container.registerSingleton(
   'NotificationRepository',
-  new MemoryNotificationRepository(),
+  CacheNotificationRepository,
 );

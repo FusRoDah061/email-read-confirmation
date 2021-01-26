@@ -14,10 +14,10 @@ export interface FindBySenderAndDescriptionDTO {
 }
 
 export default interface NotificationRepository {
-  create(data: CreateNotificationDTO): Notification;
-  findById(notificationId: string): Notification | undefined;
+  create(data: CreateNotificationDTO): Promise<Notification>;
+  findById(notificationId: string): Promise<Notification | null>;
   findBySenderAndDescription(
     data: FindBySenderAndDescriptionDTO,
-  ): Notification | undefined;
-  save(notification: Notification): Notification;
+  ): Promise<Notification | null>;
+  update(notification: Notification): Promise<Notification>;
 }

@@ -26,13 +26,15 @@ export default class NotifyService {
     notificationId,
     viewerIpAddress,
   }: RequestDTO): Promise<string> {
-    const notification = this.notificationRepository.findById(notificationId);
+    const notification = await this.notificationRepository.findById(
+      notificationId,
+    );
 
     if (notification) {
       console.log('Notification found.');
       notification.viewCount += 1;
 
-      const updatedNotification = this.notificationRepository.save(
+      const updatedNotification = await this.notificationRepository.update(
         notification,
       );
 

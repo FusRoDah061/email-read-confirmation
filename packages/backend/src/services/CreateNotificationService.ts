@@ -17,8 +17,12 @@ export default class CreateNotificationService {
     private notificationRepository: NotificationRepository,
   ) {}
 
-  public execute({ sender, description, recipient }: RequestDTO): Notification {
-    const notificationExists = this.notificationRepository.findBySenderAndDescription(
+  public async execute({
+    sender,
+    description,
+    recipient,
+  }: RequestDTO): Promise<Notification> {
+    const notificationExists = await this.notificationRepository.findBySenderAndDescription(
       { sender, description },
     );
 
@@ -26,12 +30,12 @@ export default class CreateNotificationService {
       throw new AppError('This notification already exists');
     }
 
-    const notification = this.notificationRepository.create({
+    const notification = await this.notificationRepository.create({
       sender,
       description,
       recipient,
       viewCount: 0,
-      expiration: addDays(new Date(), 7),
+      expiration: addDays(new Date(), 8),
     });
 
     return notification;
