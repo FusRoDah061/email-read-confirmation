@@ -75,7 +75,7 @@ export default class NotifyService {
               description: updatedNotification.description,
               viewerLocation: viewerCity,
               recipient: updatedNotification.recipient,
-              iconUrl: `${process.env.BACKEND_URL}/static/images/mail-icon.png`,
+              iconUrl: `${process.env.BACKEND_URL}/static/mail-icon.png`,
               expiration: format(
                 parseISO(updatedNotification.expiration),
                 'MM/dd/yyyy',

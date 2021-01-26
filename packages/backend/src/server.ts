@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import 'dotenv/config';
+import path from 'path';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
@@ -12,6 +13,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/static', express.static(path.join(__dirname, 'assets')));
 app.use(routes);
 app.use(errors());
 
