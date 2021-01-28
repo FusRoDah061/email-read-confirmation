@@ -155,7 +155,7 @@ const Home: React.FC = () => {
     <Container>
       <Jumbotron>
         <h1>Email Read Notification</h1>
-        <h2>Be notified every time your emails are viewed!</h2>
+        <h2>Get notified everytime your emails are viewed!</h2>
         <h3>No sign up or browser plugins needed.</h3>
 
         <img src={mailIcon} alt="Mail icon" />
