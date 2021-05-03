@@ -1,16 +1,18 @@
 {
-  "name": "@email-visualization-notifier/frontend",
-  "private": true,
+  "name": "@email-visualization-notifier/frontend-legacy",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@testing-library/dom": "^7.21.4",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
@@ -18,7 +20,6 @@
     "axios": "^0.21.1",
     "date-fns": "^2.16.1",
     "formik": "^2.2.6",
-    "gatsby": "^3.4.0",
     "polished": "^4.0.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -27,11 +28,6 @@
     "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4",
     "yup": "^0.32.8"
-  },
-  "devDependencies": {
-    "@types/styled-components": "^5.1.7",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-gatsby": "^1.4.0"
   },
   "browserslist": {
     "production": [
@@ -44,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.7"
   }
 }
